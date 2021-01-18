@@ -1,6 +1,6 @@
 <?php
 
-namespace Hik\Resource;
+namespace Hik\Visitor;
 
 use Hik\Module;
 
