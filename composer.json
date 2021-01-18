@@ -1,0 +1,17 @@
+{
+    "name": "xiaodi/hik",
+    "description": "hik sdk",
+    "authors": [
+        {
+            "name": "xiaodi",
+            "email": "liangjinbiao@live.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "\\xiaodi\\Hik\\": "src"
+        }
+    }
+}
