@@ -7,7 +7,7 @@ use Hik\Module;
 class Appointment extends Module
 {
     protected $urls = [
-        'make' => '/'
+        'make' => '/api/visitor/v2/appointment'
     ];
 
     public function make(array $data)
