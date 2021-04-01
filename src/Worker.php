@@ -33,35 +33,23 @@ class Worker
         $url = $this->ARTEMIS_PATH . $api;
         $sign = $this->get_sign($url);
 
-        $headers = array(
-            "Content-Type: application/json",
-            "Content-Length: " . strlen(json_encode($data)),
-            'Accept: */*',
-            'X-Ca-Key: ' . $this->config->getAppKey(),
-            'X-Ca-Signature: ' . base64_encode($sign),
-            'X-Ca-Signature-Headers: ' . strtolower('x-ca-key'),
-        );
+        try {
+            $response = $this->client->request('POST', $url, [
+                'json' => $data,
+                'headers' => [
+                    "Content-Type' => 'application/json",
+                    "Content-Length" =>  strlen(json_encode($data)),
+                    'Accept' => '*/*',
+                    'X-Ca-Key'  => $this->config->getAppKey(),
+                    'X-Ca-Signature' => base64_encode($sign),
+                    'X-Ca-Signature-Headers' =>  strtolower('x-ca-key'),
+                ]
+            ]);
 
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_URL, $this->config->getBaseUri() . $url);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-        curl_setopt(
-            $ch,
-            CURLOPT_HTTPHEADER,
-            $headers
-        );
-
-        $contents = curl_exec($ch);
-        $return_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        if ($return_code == 200) {
-            return json_decode($contents, true);
+            return \json_decode($response->getBody()->getContentS(), true);
+        } catch (\Exception $e) {
+            return false;
         }
-
-        return false;
     }
 
     private function get_sign($url)
