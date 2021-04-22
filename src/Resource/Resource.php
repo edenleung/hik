@@ -10,6 +10,7 @@ class Resource
 
     public $modules = [
         'Person' => Person::class,
-        'Org' => Org::class
+        'Org' => Org::class,
+        'AcsDoor' => AcsDoor::class
     ];
 }
